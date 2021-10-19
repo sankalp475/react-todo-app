@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+// import { FaBeer } from 'react-icons/fa';
+import Form from './components/Form';
+import TodoList from './components/TodoList';
+import { useState } from 'react'
+const App = () => {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+	const [todoState, setTodoState] = useState('')
+	const [Todo, setTodo] = useState([])
+	const [Display, setDisplay] = useState(false)
+
+	const deletecontextIcon = () => {
+		setTodo(
+			Todo.filter( (item, todos) => {
+				return (item.id === todos.id) ? item : todos
+			})
+		)
+
+		console.log(Todo.length)
+
+		if (Todo.length === 1) {
+			console.log(' deleted all ')
+			setDisplay(false)
+		}
+
+	}
+
+
+	return (
+		<div className="App">
+			<h1 className="todo-heading">TODO-APP</h1>
+			<Form setTodo={ setTodo } todoState={ todoState } Todo={ Todo } setDisplay={setDisplay} setTodoState={setTodoState}/>
+			{Display && <TodoList setTodo={ setTodo } todos={Todo}  deletefunction={deletecontextIcon}  />}
+		</div>
+	);
 }
 
 export default App;
